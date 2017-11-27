@@ -14,6 +14,7 @@ COPY conf/rsyncd.secrets /etc/
 COPY conf/client.secrets /etc/
 
 RUN set -x \
+    && mkdir /data \
     && chown root.root /etc/rsyncd.secrets \
     && chmod 600 /etc/rsyncd.secrets \
     && chown root.root /etc/client.secrets \
@@ -28,7 +29,7 @@ RUN set -x \
 RUN set -x \
     && chmod +x /client_run.sh
 
-VOLUME ["/etc"]
+VOLUME ["/data"]
 
 EXPOSE 873
 
