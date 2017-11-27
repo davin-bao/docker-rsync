@@ -9,16 +9,20 @@ ENV TYPE "master"
 ENV SERVER "127.0.0.1"
 ENV INTERVAL 1m
 
-COPY conf/rsyncd.conf /etc/
-COPY conf/rsyncd.secrets /etc/
-COPY conf/client.secrets /etc/
+RUN set -x \
+    && mkdir /data \
+    && mkdir /etc/rsync
+
+COPY conf/rsyncd.conf /etc/rsync/
+COPY conf/rsyncd.secrets /etc/rsync/
+COPY conf/client.secrets /etc/rsync/
 
 RUN set -x \
     && mkdir /data \
-    && chown root.root /etc/rsyncd.secrets \
-    && chmod 600 /etc/rsyncd.secrets \
-    && chown root.root /etc/client.secrets \
-    && chmod 600 /etc/client.secrets \
+    && chown root.root /etc/rsync/rsyncd.secrets \
+    && chmod 600 /etc/rsync/rsyncd.secrets \
+    && chown root.root /etc/rsync/client.secrets \
+    && chmod 600 /etc/rsync/client.secrets \
     && mkdir -p ~root/.ssh \
     && chmod 700 ~root/.ssh/
 
@@ -35,4 +39,4 @@ EXPOSE 873
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-# CMD ["rsync", "--daemon", "--config=/etc/rsyncd.conf", "--log-file=/var/rsync.log"]
+# CMD ["rsync", "--daemon", "--config=/etc/rsync/rsyncd.conf", "--log-file=/var/rsync.log"]
