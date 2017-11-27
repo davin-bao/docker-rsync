@@ -18,7 +18,6 @@ COPY conf/rsyncd.secrets /etc/rsync/
 COPY conf/client.secrets /etc/rsync/
 
 RUN set -x \
-    && mkdir /data \
     && chown root.root /etc/rsync/rsyncd.secrets \
     && chmod 600 /etc/rsync/rsyncd.secrets \
     && chown root.root /etc/rsync/client.secrets \
