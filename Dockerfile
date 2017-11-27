@@ -32,7 +32,7 @@ RUN set -x \
 RUN set -x \
     && chmod +x /client_run.sh
 
-VOLUME ["/data"]
+VOLUME ["/data", "/etc/rsync"]
 
 EXPOSE 873
 
